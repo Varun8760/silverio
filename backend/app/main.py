@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
+from app.routers import auth 
 app = FastAPI(title= "Silverio")
+app.include_router(auth.router)
+
 
 @app.get("/health")
 def health():
