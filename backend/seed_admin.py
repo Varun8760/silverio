@@ -16,7 +16,7 @@ def main() -> None:
             print(f"An admin already exists ({existing.login_id}). Nothing to do.")
             return
 
-        login_id = input("Admin login ID: ").strip()
+        login_id = input("Admin login ID: ").strip().upper()
         full_name = input("Full name: ").strip()
         password = getpass("Password (min 8 characters): ")
         confirm = getpass("Repeat password: ")

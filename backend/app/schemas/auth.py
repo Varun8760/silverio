@@ -14,6 +14,7 @@ class UserOut(BaseModel):
     full_name: str
     role: str
     company_id: int | None
+    permissions: list[str]
 
 
 class TokenResponse(BaseModel):

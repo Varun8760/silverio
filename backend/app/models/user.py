@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, func
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, func, text
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
@@ -26,6 +27,9 @@ class User(Base):
     role: Mapped[str] = mapped_column(String(30))
     company_id: Mapped[int | None] = mapped_column(
         ForeignKey("companies.id"), unique=True
+    )
+    permissions: Mapped[list[str]] = mapped_column(
+        ARRAY(String(30)), default=list, server_default=text("'{}'")
     )
     is_active: Mapped[bool] = mapped_column(default=True)
     created_at: Mapped[datetime] = mapped_column(

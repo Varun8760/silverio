@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.security import create_access_token, verify_password
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 def authenticate(db: Session, login_id: str, password: str) -> User:
-    user = db.scalar(select(User).where(User.login_id == login_id))
+    user = db.scalar(select(User).where(func.upper(User.login_id) == login_id.strip().upper()))
 
     if user is None or not verify_password(password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid login ID or password")
